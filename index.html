@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Management System</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        header {
+            background-color: #2b37dc;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .job-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .job-list li {
+            background-color: #f4f4f4;
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            position: relative;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .job-list li:last-child {
+            margin-bottom: 0;
+        }
+        .job-title {
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 18px;
+            color: #333;
+        }
+        .job-description {
+            color: #666;
+            line-height: 1.5;
+            font-size: 16px;
+        }
+        .delete-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #cc3333;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .delete-btn:hover {
+            background-color: #ff6666;
+        }
+        .form-container {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .form-container h2 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+        .form-container label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 16px;
+            color: #333;
+        }
+        .form-container input[type="text"],
+        .form-container textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            color: #555;
+        }
+        .form-container input[type="submit"] {
+            background-color: #2b37dc;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        .form-container input[type="submit"]:hover {
+            background-color: #2b37dc;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Job Management System</h1>
+    </header>
+    <div class="container">
+        <h2>Current Jobs</h2>
+        <ul class="job-list" id="jobList">
+            <!-- Jobs will be added dynamically here -->
+        </ul>
+        <div class="form-container">
+            <h2>Add New Job</h2>
+            <form id="jobForm">
+                <label for="jobTitle">Job Title:</label>
+                <input type="text" id="jobTitle" name="jobTitle" required>
+                <label for="jobDescription">Job Description:</label>
+                <textarea id="jobDescription" name="jobDescription" required></textarea>
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const jobForm = document.getElementById('jobForm');
+            const jobList = document.getElementById('jobList');
+
+            jobForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                const title = document.getElementById('jobTitle').value;
+                const description = document.getElementById('jobDescription').value;
+
+                if (title.trim() === '' || description.trim() === '') {
+                    alert('Please fill out all fields.');
+                    return;
+                }
+
+                const newJob = document.createElement('li');
+                newJob.innerHTML = `
+                    <div class="job-title">${title}</div>
+                    <div class="job-description">${description}</div>
+                    <button class="delete-btn">Delete</button>
+                `;
+
+                jobList.appendChild(newJob);
+
+                // Reset form fields
+                jobForm.reset();
+            });
+
+            jobList.addEventListener('click', function(event) {
+                if (event.target.classList.contains('delete-btn')) {
+                    const jobItem = event.target.parentElement;
+                    jobList.removeChild(jobItem);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+      
+
